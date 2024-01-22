@@ -49,7 +49,7 @@ jobs:
         base_image_flavor: [main, asus, framework, surface]
         base_name: [bazzite, bazzite-deck, bazzite-nvidia]
         base_image_name: [kinoite, silverblue]
-        major_version: [39]
+        major_version: [39, 40]
         arch: [amd64, aarch64]
         include:
           - major_version: 39
@@ -250,13 +250,13 @@ jobs:
           extra-args: |
             --target=${{ matrix.base_name }} --arch=${{ matrix.arch }}
 
-      - name: Sign kernel
-        uses: EyeCantCU/kernel-signer@v0.1.2
-        with:
-          image: ${{ steps.build_image.outputs.image }}
-          privkey: ${{ secrets.AKMOD_PRIVKEY_20230518 }}
-          pubkey: /etc/pki/akmods/certs/akmods-ublue.der
-          tags: ${{ steps.build_image.outputs.tags }}
+      # - name: Sign kernel
+      #   uses: EyeCantCU/kernel-signer@v0.1.2
+      #   with:
+      #     image: ${{ steps.build_image.outputs.image }}
+      #     privkey: ${{ secrets.AKMOD_PRIVKEY_20230518 }}
+      #     pubkey: /etc/pki/akmods/certs/akmods-ublue.der
+      #     tags: ${{ steps.build_image.outputs.tags }}
 
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12
