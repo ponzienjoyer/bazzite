@@ -50,10 +50,13 @@ jobs:
         base_name: [bazzite, bazzite-deck, bazzite-nvidia]
         base_image_name: [kinoite, silverblue]
         major_version: [39]
+        arch: [amd64, aarch64]
         include:
           - major_version: 39
             is_latest_version: true
             is_stable_version: true
+          - arch: aarch64
+            base_image_flavor: main
         exclude:
           - base_name: bazzite-deck
             base_image_flavor: nvidia
@@ -65,6 +68,14 @@ jobs:
             base_image_flavor: surface-nvidia
           - base_name: bazzite-nvidia
             base_image_flavor: framework
+          - arch: aarch64
+            base_image_flavor: asus
+          - arch: aarch64
+            base_image_flavor: framework
+          - arch: aarch64
+            base_image_flavor: surface
+          - arch: aarch64
+            base_name: bazzite-nvidia
     steps:
       - name: Verify base image
         uses: EyeCantCU/cosign-action/verify@v0.2.0
@@ -102,6 +113,7 @@ jobs:
           else
               echo "IMAGE_FLAVOR=${{ matrix.base_image_flavor }}" >> $GITHUB_ENV
           fi
+          echo "BUILD_ARCH=${{ matrix.arch }}" >> $GITHUB_ENV
 
       - name: Set image name
         run: |
@@ -133,6 +145,7 @@ jobs:
           # Generate a timestamp for creating an image version history
           TIMESTAMP="$(date +%Y%m%d)"
           MAJOR_VERSION="${{ matrix.major_version }}"
+          ARCH="${{ matrix.arch }}"
           COMMIT_TAGS=()
           BUILD_TAGS=()
           # Have tags for tracking builds during pull request
@@ -163,6 +176,12 @@ jobs:
                 [[ "${{ matrix.is_stable_version }}" == "true" ]]; then
                  BUILD_TAGS+=("latest")
              fi
+          fi
+
+          if [[ ${{matrix.base_image_flavor}} == "main" ]]; then
+              BUILD_TAGS+=("${MAJOR_VERSION}-${ARCH}")
+              BUILD_TAGS+=("${MAJOR_VERSION}-${ARCH}-${TIMESTAMP}")
+              BUILD_TAGS+=("${ARCH}")
           fi
 
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
@@ -225,10 +244,11 @@ jobs:
             FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
             AKMODS_FLAVOR=${{ env.AKMODS_FLAVOR }}
             IMAGE_BRANCH=${{ github.ref_name }}
+            ARCH=${{ matrix.arch }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
           extra-args: |
-            --target=${{ matrix.base_name }}
+            --target=${{ matrix.base_name }} --arch=${{ matrix.arch }}
 
       - name: Sign kernel
         uses: EyeCantCU/kernel-signer@v0.1.2
