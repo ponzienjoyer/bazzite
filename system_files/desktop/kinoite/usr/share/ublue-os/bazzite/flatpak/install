@@ -2,7 +2,9 @@ org.mozilla.firefox
 org.kde.gwenview
 org.kde.okular
 org.kde.kcalc
+org.kde.haruna
 io.github.fastrizwaan.WineZGUI
+com.github.marhkb.Pods
 it.mijorus.gearlever
 com.github.tchx84.Flatseal
 io.github.flattool.Warehouse
