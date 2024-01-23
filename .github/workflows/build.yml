@@ -49,7 +49,7 @@ jobs:
         base_image_flavor: [main, asus, framework, surface]
         base_name: [bazzite, bazzite-deck, bazzite-nvidia]
         base_image_name: [kinoite, silverblue]
-        major_version: [39, 40]
+        major_version: [39]
         arch: [amd64, arm64]
         include:
           - major_version: 39
