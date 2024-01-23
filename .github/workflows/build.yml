@@ -50,12 +50,12 @@ jobs:
         base_name: [bazzite, bazzite-deck, bazzite-nvidia]
         base_image_name: [kinoite, silverblue]
         major_version: [39, 40]
-        arch: [amd64, aarch64]
+        arch: [amd64, arm64]
         include:
           - major_version: 39
             is_latest_version: true
             is_stable_version: true
-          - arch: aarch64
+          - arch: arm64
             base_image_flavor: main
         exclude:
           - base_name: bazzite-deck
@@ -68,13 +68,13 @@ jobs:
             base_image_flavor: surface-nvidia
           - base_name: bazzite-nvidia
             base_image_flavor: framework
-          - arch: aarch64
+          - arch: arm64
             base_image_flavor: asus
-          - arch: aarch64
+          - arch: arm64
             base_image_flavor: framework
-          - arch: aarch64
+          - arch: arm64
             base_image_flavor: surface
-          - arch: aarch64
+          - arch: arm64
             base_name: bazzite-nvidia
     steps:
       - name: Verify base image
