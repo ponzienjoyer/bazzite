@@ -78,7 +78,7 @@ jobs:
             base_name: bazzite-nvidia
     steps:
       - name: Verify base image
-        uses: EyeCantCU/cosign-action/verify@v0.2.0
+        uses: EyeCantCU/cosign-action/verify@v0.2.2
         with:
           containers: ${{ matrix.base_image_name }}-${{ matrix.base_image_flavor }}
           pubkey: https://raw.githubusercontent.com/ublue-os/${{ matrix.base_image_flavor }}/main/cosign.pub
@@ -172,9 +172,10 @@ jobs:
              fi
           else
              BUILD_TAGS=("${MAJOR_VERSION}" "${MAJOR_VERSION}-${TIMESTAMP}")
+             BUILD_TAGS+=("${MAJOR_VERSION}-stable" "${MAJOR_VERSION}-stable-${TIMESTAMP}")
              if [[ "${{ matrix.is_latest_version }}" == "true" ]] && \
                 [[ "${{ matrix.is_stable_version }}" == "true" ]]; then
-                 BUILD_TAGS+=("latest")
+                 BUILD_TAGS+=("latest" "stable")
              fi
           fi
 
@@ -284,7 +285,7 @@ jobs:
             --disable-content-trust
 
       - name: Sign container image
-        uses: EyeCantCU/cosign-action/sign@v0.2.0
+        uses: EyeCantCU/cosign-action/sign@v0.2.2
         if: github.event_name != 'pull_request'
         with:
           containers: ${{ env.IMAGE_NAME }}

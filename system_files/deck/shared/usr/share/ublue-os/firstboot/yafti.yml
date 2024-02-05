@@ -9,7 +9,7 @@ screens:
       title: "Welcome to Bazzite (Steam Deck & HTPC Edition)"
       icon: "/usr/share/ublue-os/bazzite/logo.svg"
       description: |
-        Configure your system to get started. Completion of this process is required for Game mode to function.
+        Configure your system to get started. This utility can be re-opened at any time, so don't feel like you have to get it perfect your first go-through.
   configure-bazzite:
     source: yafti.screen.package
     values:
@@ -221,6 +221,7 @@ screens:
           - AppImage Pool: io.github.prateekmedia.appimagepool
           - Barrier: com.github.debauchee.barrier
           - Bitwarden: com.bitwarden.desktop
+          - BoxBuddy: io.github.dvlv.boxbuddyrs
           - Calibre: com.calibre_ebook.calibre
           - Fedora Media Writer: org.fedoraproject.MediaWriter
           - Gradience: com.github.GradienceTeam.Gradience
